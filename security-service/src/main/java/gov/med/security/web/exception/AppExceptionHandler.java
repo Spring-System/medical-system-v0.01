@@ -12,6 +12,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -65,6 +66,17 @@ public class AppExceptionHandler {
 				ErrorMessageConstants.BINDING_VALIDATION,
 				getLocale(request)
 				), errors);
+	}
+
+	@ExceptionHandler(UsernameNotFoundException.class)
+	public final ResponseEntity<ErrorResponse> handleUsernameNotFoundException(HttpServletRequest request,
+	                                                               final UsernameNotFoundException e) {
+		log.error(e.toString(), e.getMessage());
+		return build(HttpStatus.UNAUTHORIZED,
+				messageSourceService.get(
+				ErrorMessageConstants.USERNAME_NOT_FOUND,
+				getLocale(request))
+		);
 	}
 
 	@ExceptionHandler({
