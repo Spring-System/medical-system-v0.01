@@ -1,4 +1,4 @@
-package gov.med.security_service.entity;
+package gov.med.security.web.core;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;

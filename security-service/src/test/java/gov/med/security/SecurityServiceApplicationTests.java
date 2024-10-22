@@ -1,4 +1,4 @@
-package gov.med.security_service;
+package gov.med.security;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
