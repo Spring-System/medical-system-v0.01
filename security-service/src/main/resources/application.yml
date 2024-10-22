@@ -16,6 +16,10 @@ spring:
 server:
   port: 9000
 
+app:
+  default-locale: ${APP_DEFAULT_LOCALE:vi}
+  default-timezone: ${APP_DEFAULT_TIMEZONE:Asia/Ho_Chi_Minh}
+
 logging:
   level:
     org.springframework.security: trace

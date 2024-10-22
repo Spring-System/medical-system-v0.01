@@ -6,14 +6,30 @@ import com.fasterxml.jackson.databind.introspect.DefaultAccessorNamingStrategy.P
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
+
+import java.util.Locale;
+import java.util.TimeZone;
 
 
 @Configuration
 @AllArgsConstructor
 public class AppConfig {
+    @Bean
+    public LocaleResolver localeResolver(@Value("${app.default-locale:vi}") final String defaultLocale,
+                                         @Value("${app.default-timezone:Asia/Ho_Chi_Minh}") final String defaultTimezone) {
+        AcceptHeaderLocaleResolver localResolver = new AcceptHeaderLocaleResolver();
+        localResolver.setDefaultLocale(new Locale.Builder().setLanguage(defaultLocale).build());
+
+        TimeZone.setDefault(TimeZone.getTimeZone(defaultTimezone));
+
+        return localResolver;
+    }
 
     @Bean
     public ObjectMapper objectMapper() {
