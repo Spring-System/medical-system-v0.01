@@ -1,6 +1,7 @@
 package gov.med.security.config;
 
 import gov.med.security.web.core.Users;
+import gov.med.security.web.repository.UserRepository;
 import gov.med.security.web.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
@@ -12,12 +13,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class UserDetailServiceConfig implements UserDetailsService {
-    private final UserService userService;
+    private final UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Users users = userService.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException(username));
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Users users = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException(email));
 
         // return UserDetails not Users
         return new User (

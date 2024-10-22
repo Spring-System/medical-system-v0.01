@@ -22,30 +22,19 @@ public class Authorization {
     private String registeredClientId;
     private String principalName;
     private String authorizationGrantType;
-    @Column(length = 1000)
     private String authorizedScopes;
-    @Column(length = 4000)
     private String attributes;
-
-    @Column(length = 4000)
     private String authorizationCodeValue;
     private Instant authorizationCodeIssuedAt;
     private Instant authorizationCodeExpiresAt;
     private String authorizationCodeMetadata;
-
-    @Column(length = 4000)
     private String accessTokenValue;
     private Instant accessTokenIssuedAt;
     private Instant accessTokenExpiresAt;
-    @Column(length = 2000)
     private String accessTokenMetadata;
-    @Column(length = 1000)
     private String accessTokenScopes;
-
-    @Column(length = 4000)
     private String refreshTokenValue;
     private Instant refreshTokenIssuedAt;
     private Instant refreshTokenExpiresAt;
-    @Column(length = 2000)
     private String refreshTokenMetadata;
 }
