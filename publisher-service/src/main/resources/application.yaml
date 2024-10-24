@@ -1,0 +1,12 @@
+server:
+  port: 8881
+spring:
+  application:
+    name: publisher-service
+  kafka:
+    # Kafka broker address
+    # Kafka producer configuration
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer

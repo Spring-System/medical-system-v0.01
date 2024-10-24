@@ -1,0 +1,14 @@
+server:
+  port: 8882
+spring:
+  application:
+    name: subscriber-service
+  kafka:
+    # Kafka broker address
+    # Kafka consumer configuration
+    bootstrap-servers: localhost:9092
+    consumer:
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
