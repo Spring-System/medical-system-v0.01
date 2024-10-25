@@ -34,5 +34,4 @@ server:
         http-only: true
         secure: true
         same-site: None
-        domain: localhost
       timeout: 3000

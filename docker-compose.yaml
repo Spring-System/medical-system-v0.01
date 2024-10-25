@@ -1,5 +1,3 @@
-version: '2'
-
 networks:
   app-tier:
     driver: bridge
@@ -25,6 +23,75 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
       CLUSTER_ID: 'ciWo7IWazngRchmPES6q5A=='
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+
+  gateway:
+    container_name: gateway
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+
+  publisher-service:
+    container_name: publisher-service
+    build:
+      context: ./publisher-service
+      dockerfile: Dockerfile
+    environment:
+      - BOOTSTRAP_SERVER=kafka:9092
+    ports:
+      - "8881:8881"
+    depends_on:
+      - kafka
+      - gateway
+
+  subscriber-service:
+    container_name: subscriber-service
+    build:
+      context: ./subscriber-service
+      dockerfile: Dockerfile
+    environment:
+      - BOOTSTRAP_SERVER=kafka:9092
+    ports:
+      - "8882:8882"
+    depends_on:
+      - kafka
+      - gateway
+
+  security-service:
+    container_name: security-service
+    build:
+      context: ./security-service
+      dockerfile: Dockerfile
+    environment:
+      - MYSQL_MEDICAL_SYSTEM=${MYSQL_URL}
+    ports:
+      - "9000:9000"
+    depends_on:
+      - kafka
+      - gateway
+      - subscriber-service
+      - publisher-service
+
+  service:
+    container_name: service
+    build:
+      context: ./service
+      dockerfile: Dockerfile
+    environment:
+      - AUTHORIZATION_URI=http://security-service:9000/oauth2/authorize
+      - TOKEN_URI=http://security-service:9000/oauth2/token
+      - USER_INFO_URI=http://security-service:9000/userinfo
+      - JWK_SET_URI=http://security-service:9000/oauth2/jwks
+    ports:
+      - "8081:8081"
+    depends_on:
+      - security-service
+      - kafka
+      - gateway
+      - subscriber-service
+      - publisher-service
+
 volumes:
   kafka_data:
     driver: local

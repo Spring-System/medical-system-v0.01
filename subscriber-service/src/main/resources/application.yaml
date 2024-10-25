@@ -6,7 +6,7 @@ spring:
   kafka:
     # Kafka broker address
     # Kafka consumer configuration
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: ${BOOTSTRAP_SERVER:localhost:9092}
     consumer:
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
