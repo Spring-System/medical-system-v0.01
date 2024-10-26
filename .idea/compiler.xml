@@ -7,7 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="subscriper-service" />
+        <module name="subscriber-service" />
         <module name="gateway" />
         <module name="service" />
         <module name="publisher-service" />
@@ -21,7 +21,7 @@
       <module name="publisher-service" options="-parameters" />
       <module name="security-service" options="-parameters" />
       <module name="service" options="-parameters" />
-      <module name="subscriper-service" options="-parameters" />
+      <module name="subscriber-service" options="-parameters" />
     </option>
   </component>
 </project>

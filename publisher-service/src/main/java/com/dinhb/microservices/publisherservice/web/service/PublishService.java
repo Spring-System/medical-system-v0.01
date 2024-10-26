@@ -1,5 +1,6 @@
 package com.dinhb.microservices.publisherservice.web.service;
 
+import com.dinhb.microservices.publisherservice.web.entity.Notification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -11,12 +12,11 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @RequiredArgsConstructor
 public class PublishService {
-	private final KafkaTemplate<String, String> kafkaTemplate;
-
+	private final KafkaTemplate<String, Notification> kafkaTemplate;
 	@Scheduled(fixedRate = 2000)
-	public void publishMessageAsync(String message) {
-		log.info("Sending message: {}", message);
-		kafkaTemplate.send("notification-topic", message)
+	public void publishMessageAsync(String topicName, Notification value) {
+		log.info("Sending message: {}", value);
+		kafkaTemplate.send("notification-topic", value)
 				.whenComplete((result, ex) -> {
 					if (ex != null) {
 						onFailure(ex);
@@ -26,7 +26,7 @@ public class PublishService {
 				});
 	}
 
-	private void onSuccess(SendResult<String, String> result) {
+	private void onSuccess(SendResult<String, Notification> result) {
 		log.info("Receive new metadata. \n"
 						+ "Topic: {}, Partition: {}, Offset: {}, Timestamp: {}",
 				result.getRecordMetadata().topic(),

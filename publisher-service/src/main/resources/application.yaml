@@ -7,6 +7,9 @@ spring:
     # Kafka broker address
     # Kafka producer configuration
     bootstrap-servers: ${BOOTSTRAP_SERVER:localhost:9092}
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    properties:
+      security:
+        protocol: PLAINTEXT
+#    producer:
+#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      value-serializer: org.apache.kafka.common.serialization.StringSerializer

@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.dinhb.microservices</groupId>
-	<artifactId>subscriper-service</artifactId>
+	<artifactId>subscriber-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>subscriper-service</name>
-	<description>subscriper-service</description>
+	<name>subscriber-service</name>
+	<description>subscriber-service</description>
 	<url/>
 	<licenses>
 		<license/>
