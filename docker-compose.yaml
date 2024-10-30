@@ -90,6 +90,26 @@ services:
       - subscriber-service
       - publisher-service
 
+  patient-management-service:
+    container_name: patient-management-service
+    build:
+      context: ./patient-management-service
+      dockerfile: Dockerfile
+    environment:
+      - AUTHORIZATION_URI=http://security-service:9000/oauth2/authorize
+      - TOKEN_URI=http://security-service:9000/oauth2/token
+      - USER_INFO_URI=http://security-service:9000/userinfo
+      - JWK_SET_URI=http://security-service:9000/oauth2/jwks
+    ports:
+      - "8082:8082"
+    depends_on:
+      - security-service
+      - kafka
+      - gateway
+      - subscriber-service
+      - publisher-service
+
+
 volumes:
   kafka_data:
     driver: local

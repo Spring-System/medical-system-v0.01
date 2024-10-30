@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: patient-management-system
+
+  mvc:
+    log-resolved-exception: false
+  thymeleaf:
+    prefix: classpath:/webapp/
+  security:
+    oauth2:
+      client:
+        provider:
+          custom-provider.:
+            authorization-uri: ${AUTHORIZATION_URI:http://localhost:9000/oauth2/authorize}
+            token-uri: ${TOKEN_URI:http://localhost:9000/oauth2/token}
+            user-info-uri: ${USER_INFO_URI:http://localhost:9000/userinfo}
+            user-name-attribute: sub
+            user-info-authentication-method: header
+            jwk-set-uri: ${JWK_SET_URI:http://localhost:9000/oauth2/jwks}
+
+        registration:
+          my-client:
+            client-id: "client1"
+            client-secret: "123"
+            redirect-uri: "{baseUrl}/login/oauth2/callback/{registrationId}"
+            provider: custom-provider
+            authorization-grant-type: authorization_code
+            scope: "openid"
+  datasource:
+    url: ${MYSQL_MEDICAL_SYSTEM}
+    username: root
+    password: 12345
+server:
+  port: 8082
+  servlet:
+    session:
+      cookie:
+        name: RESOURCE_JSESSION_ID
+        http-only: true
+        secure: true
+        same-site: None
+      timeout: 3000

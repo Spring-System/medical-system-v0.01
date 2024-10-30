@@ -60,10 +60,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .anyRequest().authenticated()
                 )
-                .rememberMe(Customizer.withDefaults()
+                .formLogin(form -> form
+                        .failureHandler(new FailureHandler())
                 )
-                .formLogin(Customizer.withDefaults()
-                );
+        ;
 
         return http.build();
     }
